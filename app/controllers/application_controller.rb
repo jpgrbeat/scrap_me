@@ -7,10 +7,9 @@ class ApplicationController < ActionController::API
     token = request.headers['Authorization'].split(' ')[1]
     decoded_payload = decode_token(token)
     @current_user = User.find(decoded_payload('user_id'))
-
+    debugger
     rescue JWT::VerificationError
       render json: {success: false}, status: 401
-    end
   end
 
   def current_user
@@ -27,8 +26,7 @@ class ApplicationController < ActionController::API
   end
 
   def decode_token(token)
-    decoded = JWT.decode token, hmac_secret, true, { algorithm: 'HS256' }
-    decoded[0]
-  end
-  
+   decoded = JWT.decode token, hmac_secret, true, { algorithm: 'HS256' }
+   decoded[0]
+ end
 end

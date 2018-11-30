@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
   def show
-    render json: { email: current_user.email, name: current_user.name }
+    render json: my_current_user
+  end
+  private
+  def user_params
+    params.require(:user).permit(:name,:email,:password,:id)
   end
 end
